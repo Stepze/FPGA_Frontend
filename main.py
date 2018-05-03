@@ -1,17 +1,27 @@
-# -*- coding: utf-8 -*-
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+import sys
 
+from DummyGuiController import QTGuiController
 from DummyConnection import DummyConnection
-from DummyDecodeLogic import DummyDecodeLogic
 from DummyApplicationLogic import DummyApplicationLogic
-
-
-def test():
-	connection = DummyConnection()
-	decoder = DummyDecodeLogic(1,connection)
-	application = DummyApplicationLogic(2,connection)
-	decoder.start()
-	application.start()
-
+from DummyDecodeLogic import DummyDecodeLogic
 
 if __name__ == "__main__":
-	test()
+	app = QApplication(sys.argv)
+	connection1, connection2 = DummyConnection(), DummyConnection()
+	decLog = DummyDecodeLogic(connection1,1)
+	appLog = DummyApplicationLogic(connection1,connection2,2)
+	guictrl = QTGuiController("QtLayout",connection2,3)
+	
+	
+	guictrl.qtwindow.show()
+	
+	decLog.start()
+	appLog.start()
+	guictrl.start()
+	sys.exit(app.exec_())
+
+
+

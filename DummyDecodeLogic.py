@@ -6,10 +6,10 @@ from threading import Thread
 
 class DummyDecodeLogic(Thread):
 
-	def __init__(self,identifier,connection):
+	def __init__(self,connection,idx):
 		Thread.__init__(self)
 		self.connection = connection
-		self.id = identifier
+		self.id = idx
 		self.connection.register(self.id)
 		
 

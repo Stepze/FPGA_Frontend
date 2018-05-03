@@ -5,15 +5,18 @@ import time
 from threading import Thread
 
 class DummyApplicationLogic(Thread):
-	def __init__(self,identifier,connection):
+	def __init__(self,connection1,connection2,idx):
 		Thread.__init__(self)
-		self.connection = connection
-		self.id = identifier
-		self.connection.register(self.id)
+		self.connection1 = connection1
+		self.connection2 = connection2
+		self.id = idx
+		self.connection1.register(self.id)
+		self.connection2.register(self.id)
 
 	def run(self):
 		while True:
-			self.receivedJSON = self.connection.receive(self.id)
+			self.receivedJSON = self.connection1.receive(self.id)
 			if self.receivedJSON != "":
-				print("application logic has received:")
-				print(self.receivedJSON)
+				print("application logic has received sth.")
+				self.connection2.send(self.receivedJSON,self.id)
+				
