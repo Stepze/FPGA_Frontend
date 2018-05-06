@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-import json
+from AbstractConnection import AbstractConnection
 
 
-class DummyConnection():
-	def __init__(self):										
+class DummyConnection(AbstractConnection):
+	def __init__(self):
 		self.jsonList = [[],[]]												
 		self.id1 = -1
 		self.id2 = -1
@@ -26,9 +26,9 @@ class DummyConnection():
 
 	def receive(self,idx):																	#here it is the other way round
 		if idx == self.id1 and len(self.jsonList[1]) > 0:
-			return self.jsonList[1].pop()
+			return self.jsonList[1].pop(0)
 		elif idx == self.id2 and len(self.jsonList[0]) > 0:
-			return self.jsonList[0].pop()
+			return self.jsonList[0].pop(0)
 		elif idx != self.id1 and idx != self.id2:
 			raise Exception("unknown id")
 		else:

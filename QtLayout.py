@@ -15,4 +15,8 @@ class Gui_class(QMainWindow):
 		self.layout.addWidget(self.text1,1,1)
 		self.layout.addWidget(self.text2,2,1)
 
+
+		self.sendBackEdit = QLineEdit("")
+		self.layout.addWidget(self.sendBackEdit,3,1)
+
 		
