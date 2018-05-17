@@ -18,7 +18,6 @@ class DummyApplicationLogic(Thread):
 		while True:
 			self.receivedJSON = self.connection1.receive(self.id)
 			if self.receivedJSON != "":
-				print("application logic has received sth.")
 				self.connection2.send(self.receivedJSON,self.id)
 
 
@@ -26,4 +25,5 @@ class DummyApplicationLogic(Thread):
 			if self.receivedJSON != "":
 				self.connection1.send(self.receivedJSON,self.id)
 
+			time.sleep(0.5)
 				

@@ -10,8 +10,8 @@ class Gui_class(QMainWindow):
 		self.layout = QGridLayout()
 		self.mainWidget.setLayout(self.layout)
 
-		self.text1 = QLabel("A")
-		self.text2 = QLabel("B")
+		self.text1 = QLabel("")
+		self.text2 = QLabel("")
 		self.layout.addWidget(self.text1,1,1)
 		self.layout.addWidget(self.text2,2,1)
 
