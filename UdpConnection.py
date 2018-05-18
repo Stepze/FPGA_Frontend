@@ -7,17 +7,17 @@ import json
 import pickle
 
 class UdpConnection(AbstractConnection,Thread):
-	def __init__(self,ip,receiveport,destinationport):
+	def __init__(self,ip,rcvport,destport):
 		Thread.__init__(self)
 		self.setDaemon(True)
 		self.jsonList = []
 		self.id1 = -1
 		self.ip = ip
-		self.recvPort = receiveport
-		self.destPort = destinationport
-		self.recvSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-		self.recvSock.bind(("",self.recvPort))
-		self.sendSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		self.recvPort = rcvport
+		self.destPort = destport
+		self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		self.sock.bind(("",self.recvPort))
+		
 		
 		
 	def register(self,idx):
@@ -27,7 +27,7 @@ class UdpConnection(AbstractConnection,Thread):
 	def send(self,jsonObj,idx):
 		if idx == self.id1:
 			
-			self.sendSock.sendto(str(jsonObj).encode(), (self.ip,self.destPort))
+			self.sock.sendto(str(jsonObj).encode(), (self.ip,self.destPort))
 		else:
 			raise Exception("unknown id")
 
@@ -41,7 +41,7 @@ class UdpConnection(AbstractConnection,Thread):
 
 	def run(self):
 		while True:
-			data = self.recvSock.recv(1024)
+			data = self.sock.recv(1024)
 			self.jsonList.append(json.loads(data.decode('utf-8')))
 			time.sleep(0.1)
 

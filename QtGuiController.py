@@ -17,6 +17,7 @@ class QtGuiController(AbstractGuiController):
 		layout_module = __import__(guifile)
 		layout_class = getattr(layout_module,"Gui_class")
 		self.qtwindow = layout_class()
+		self.qtwindow.show()
 		
 		self.id_layout_dict = {1:self.qtwindow.text1, 2:self.qtwindow.text2,3:self.qtwindow.sendBackEdit}
 

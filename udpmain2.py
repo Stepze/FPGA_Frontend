@@ -7,7 +7,6 @@ if __name__ == "__main__":
 	app = QApplication(sys.argv)
 	connection2 = UdpConnection("127.0.0.1", 40001,40000)
 	guictrl = QtGuiController("QtLayout", connection2, 3)
-	guictrl.qtwindow.show()
 	connection2.start()
 	guictrl.start()
 
