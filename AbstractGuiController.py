@@ -3,15 +3,16 @@
 from abc import ABC, abstractmethod
 from threading import Thread
 
-class AbstractGuiController(ABC,Thread):
+class AbstractGuiController(ABC,Thread):			#This abstract class shows the usage of the GuiController interface.
 	@abstractmethod
-	def read_data(self):
+	def read_data(self):							#This method is used to get the information which is displayed at a certain gui-element.
+		pass										#Each gui-element is provided with an id, with which it is identified. The type of the returned
+													#data depends on the type of the gui-element.
+	
+	@abstractmethod									#This method is used to manipulate the contents of the gui-elements. Again the gui-elements are
+	def write_data(self):							#found via an id and the data format depends on their type.
 		pass
 
-	@abstractmethod
-	def write_data(self):
-		pass
-
-	@abstractmethod
-	def run(self):
+	@abstractmethod									#Since the GuiController needs to be running constantly and independant from any other parts of the
+	def run(self):									#program, it needs to be a thread.
 		pass

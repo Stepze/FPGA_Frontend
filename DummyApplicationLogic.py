@@ -4,8 +4,8 @@ import random
 import time
 from threading import Thread
 
-class DummyApplicationLogic(Thread):
-	def __init__(self,connection1,connection2,idx):
+class DummyApplicationLogic(Thread):									#At the moment this is a dummy-class which objects just forward the received JSON-objects
+	def __init__(self,connection1,connection2,idx):						#in both directions.
 		Thread.__init__(self)
 		self.setDaemon(True)
 		self.connection1 = connection1
