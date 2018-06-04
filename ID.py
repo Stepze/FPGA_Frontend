@@ -37,7 +37,6 @@ class ID:
 				id_name = file_content[i][1:]
 				for j in range(i+1,len(file_content)):
 					if file_content[j][0] == "{":
-						print(file_content[j])
 						json_list.append(json.loads(file_content[j]))
 					if file_content[j][0]== "@" or j==len(file_content)-1:
 						if json_list != []:
@@ -48,17 +47,17 @@ class ID:
 
 #This method returns a list of tuples, of which the first entry is the address and the second is the calculated value.
 #If the returned list is empty, than there are no dependencies for the given address.
-	def get_dependant_values(address,value):
+	def get_dependant_values(self,address,value):
 		return_list = []
-		for i in __address_dependencies:
-			if i == address:
+		for i in self.__address_dependencies:
+			if i.get("address") == address:
 				for address,dependency in i.items():
 					if dependency == "+1":
-						return_list.append(address,value+1)
+						return_list.append((address,value+1))
 					elif dependency == "-1":
-						return_list.append(address,value-1)
+						return_list.append((address,value-1))
 					elif dependency == "/2":
-						return_list.append(address,value/2)
+						return_list.append((address,value/2))
 					#and so on
 
 
