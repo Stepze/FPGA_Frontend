@@ -12,6 +12,5 @@ if __name__ == "__main__":																		#This is one part of the netowrk-usi
 	
 	decLog.start()
 	appLog.start()
-	connection2.start()
 	while True:
 		time.sleep(1)

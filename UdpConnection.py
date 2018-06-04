@@ -21,6 +21,7 @@ class UdpConnection(AbstractConnection,Thread):									#running on different co
 		self.destPort = destport
 		self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)			#A udp-socket object is used to handle the network traffic.
 		self.sock.bind(("",self.recvPort))										#The port for incoming packages is bound to the socket.
+		self.start()
 		
 		
 		

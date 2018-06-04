@@ -1,0 +1,13 @@
+#Example of an ID file
+#Comments start with a hashtag.
+#The @ sign marks the beginning of a new ID.
+#The operator dependencies between the values of addresses are written in json format.
+#The following example will demonstrate how to create new entries.
+
+
+
+@ID1
+{"address": "a", "b":"", "c": "+1", "d":"/2" }			#The depencies calculate as follows: b has no dependencies to a, c=a+1, d=a/2, multiple operations are sperated by comma
+{"address": "b", "a":"", "c": "", "d":"" }				#Nothing is dependant on b
+{"address": "c", "a":"-1", "b": "", "d":"-1,/2" }		#If the dependency also exists the other way round and a is also dependant on c, the inverse operation has to be given
+{"address": "d", "a":"*2", "b": "", "c":"" }			#If that is not the case, the corresponding entry can be left empty: c is not dependant on d, although d is dependant on c
