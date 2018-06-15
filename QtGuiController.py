@@ -16,11 +16,23 @@ class QtGuiController(AbstractGuiController):								#Objects of this class are 
 		self.connection.register(self.id)
 		layout_module = __import__(guifile)									#The next lines import the file with the qt-layout during runtime.
 		layout_class = getattr(layout_module,"Gui_class")
-		self.qtwindow = layout_class()										#Here a new instance of the Window is made.
+		self.qtwindow = layout_class(self)									#Here a new instance of the Window is made.
 		self.qtwindow.show()
 		
-		self.id_layout_dict = {1:self.qtwindow.text1, 2:					#Here the layout dictionary is created which translates a certain gui element into a number
-		self.qtwindow.text2,3:self.qtwindow.sendBackEdit} 					#through which it can be accessed.
+		self.id_layout_dict = {}											#Here the layout dictionary is created which translates a certain gui element into a number
+																			#through which it can be accessed.
+		 					
+
+	def announce_gui_element(self,element):										#The GuiController is the parent of the Layout class
+		try:
+			i = len(self.id_layout_dict)+1										#Each gui-element has to announce itself, to fill the dictionary
+			self.id_layout_dict.update({i:element})
+		except:
+			i=1
+			self.id_layout_dict = {i:element}
+		
+
+
 
 	def read_data(self,idy):												#read_data() takes the id of a gui element and returns the data that is contained in that 
 		a = self.id_layout_dict.get(idy)									#element. The type of the data depends on the type of the gui-element.
@@ -37,19 +49,20 @@ class QtGuiController(AbstractGuiController):								#Objects of this class are 
 		elif type(a) == QLineEdit:
 			a.setText(str(data))
 
-	def run(self):															#The run() method periodically checks all user-editable gui-elements for user input and 
-		c = self.read_data(3)												#forwards that input in form of a JSON-object via its connection.
+	def run(self):															#The run() method periodically checks all user-editable gui-elements for user input and 										#forwards that input in form of a JSON-object via its connection.
 		while True:															#How that JSON-object is created still needs to be discussed. This is just for demonstrating
 			self.receivedJSON = self.connection.receive(self.id)			#the principle.
+			print(self.receivedJSON)
 			if self.receivedJSON != "":
 				self.write_data(2,str(self.receivedJSON))
-			b = self.read_data(3)
-			if b != "" and c != b:
-				jsonDict = {"module":"test","component":"test","command":"test","value":b}
-				jSONobj = json.JSONEncoder().encode(jsonDict)
-				self.connection.send(jSONobj,self.id)
-				c = b
-
+			if self.qtwindow.has_data_changed() == True:
+				for key,value in self.id_layout_dict:
+					b = self.read_data(key)
+					if b != "":
+						jsonDict = {"module":"ID1","component":"test","command":"test","value":b}
+						jSONobj = json.JSONEncoder().encode(jsonDict)
+						self.connection.send(jSONobj,self.id)
+		
 
 
 

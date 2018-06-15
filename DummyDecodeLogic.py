@@ -12,6 +12,7 @@ class DummyDecodeLogic(Thread):											#Objects of this class mark the beginn
 		self.connection = connection
 		self.id = idx
 		self.connection.register(self.id)
+		self.receivedJSON = ""
 		
 
 	def run(self):
